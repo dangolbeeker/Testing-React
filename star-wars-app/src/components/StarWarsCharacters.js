@@ -3,9 +3,13 @@ import Loader from "react-loader-spinner";
 
 import { getData } from "../api";
 import "./star-wars-characters.css";
+import { useSelector, useDispatch } from "react-redux";
 
 export default function StarWarsCharacters() {
-  const [url, setUrl] = useState("https://swapi.co/api/people");
+  //hook pointing to reducer
+  const url = useSelector(state => state.url)
+  const dispatch = useDispatch()
+
   const [previous, setPrevious] = useState();
   const [next, setNext] = useState();
   const [isLoading, setIsLoading] = useState(false);
@@ -25,13 +29,13 @@ export default function StarWarsCharacters() {
 
   const goToNext = e => {
     e.preventDefault();
-    setUrl(next);
-  };
+    dispatch({ type: "PAGE", payload: next })
+  }
 
   const goToPrevious = e => {
     e.preventDefault();
-    setUrl(previous);
-  };
+    dispatch({ type: "PAGE", payload: previous })
+  }
 
   return (
     <div>
